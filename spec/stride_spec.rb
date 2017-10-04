@@ -1,11 +1,28 @@
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe Stride do
-  it "has a version number" do
-    expect(Stride::VERSION).not_to be nil
-  end
+  describe '.configure' do
+    before do
+      described_class.configure do |config|
+        config.client_id = 'some client id'
+        config.client_secret = 'some client secret'
+      end
+    end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+    it 'returns sets Stride.configuration' do
+      expect(Stride.configuration).to be_a Stride::Configuration
+    end
+
+    it 'sets client_id' do
+      expect(Stride.configuration.client_id).to eq 'some client id'
+    end
+
+    it 'sets client_secret' do
+      expect(Stride.configuration.client_secret).to eq 'some client secret'
+    end
+
+    it 'defaults production to true' do
+      expect(Stride.configuration.production?).to be true
+    end
   end
 end

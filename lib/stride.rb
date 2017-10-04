@@ -1,4 +1,7 @@
 require "stride/version"
+require "stride/configuration"
+require "stride/token"
+require "stride/client"
 
 module Stride
   class << self

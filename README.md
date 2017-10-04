@@ -31,7 +31,13 @@ end
 
 ## Usage
 
-TODO
+Acquiring an access token from the Atlassian Identity API:
+
+```ruby
+Stride::Token.fetch!
+```
+
+This returns a `Token` instance, which will have an `access_token` attribute.
 
 ## Development
 
