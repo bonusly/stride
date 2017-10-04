@@ -1,8 +1,6 @@
 # Stride
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stride`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A ruby wrapper for Stride's API.
 
 ## Installation
 
@@ -20,9 +18,20 @@ Or install it yourself as:
 
     $ gem install stride
 
+## Configuration
+
+Add to an initializer:
+
+```ruby
+Stride.configure do |config|
+  config.client_id = "YOUR CLIENT ID"
+  config.client_secret = "YOUR CLIENT SECRET"
+end
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+TODO
 
 ## Development
 
