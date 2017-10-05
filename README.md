@@ -31,13 +31,43 @@ end
 
 ## Usage
 
-Acquiring an access token from the Atlassian Identity API:
+### Acquiring an access token
+
+This should be done for you in most cases, but if you need to acquire an access token from the Atlassian Identity API, you may do so:
 
 ```ruby
 Stride::Token.fetch!
 ```
 
 This returns a `Token` instance, which will have an `access_token` attribute.
+
+### Sending a message
+
+If there's a specific cloud and conversation you want to send to, you can send an arbitrary message using `Stride::Client#send_message`.
+
+```ruby
+cloud_id = '911f7ab7-0581-4082-bed3-bad889ec4c91'
+conversation_id = '76987a29-b7d9-43c5-b071-7aab71d88a6b'
+
+message_body = {
+  version: 1,
+  type: 'doc',
+  content: [
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text: 'I am the egg man, they are the egg men'
+        }
+      ]
+    }
+  ]
+}
+
+Stride::Client.new.send_message(cloud_id, conversation_id, message_body)
+# => {"id"=>"5d6e39d3-ab1d-10e7-be03-02420aff0003"}
+```
 
 ## Development
 

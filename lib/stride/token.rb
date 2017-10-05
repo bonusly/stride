@@ -17,28 +17,9 @@ module Stride
 
     private
 
-    class Request
-      def json
-        if result.code == '200'
-          JSON.parse(result.body)
-        else
-          raise ApiFailure.new("Could not get token: #{result.inspect}")
-        end
-      end
+    class Request < BaseRequest
 
       private
-
-      def result
-        @result ||= Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-          http.request(request)
-        end
-      end
-
-      def request
-        Net::HTTP::Post.new(uri).tap do |req|
-          req.set_form_data(params)
-        end
-      end
 
       def uri
         @uri ||= URI(Stride.configuration.auth_api_base_url + '/oauth/token')
@@ -54,6 +35,4 @@ module Stride
       end
     end
   end
-
-  class ApiFailure < RuntimeError; end
 end

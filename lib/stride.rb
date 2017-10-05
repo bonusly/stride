@@ -1,6 +1,8 @@
 require "stride/version"
 require "stride/configuration"
+require "stride/base_request"
 require "stride/token"
+require "stride/message"
 require "stride/client"
 
 module Stride

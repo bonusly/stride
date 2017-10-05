@@ -4,7 +4,7 @@ RSpec.describe Stride do
   describe '.configure' do
     before do
       described_class.configure do |config|
-        config.client_id = 'some client id'
+        config.client_id     = 'some client id'
         config.client_secret = 'some client secret'
       end
     end

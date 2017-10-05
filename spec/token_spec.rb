@@ -14,13 +14,8 @@ module Stride
         before do
           stub_request(:post, "https://auth.atlassian.com/oauth/token").
             with(
-              body: {
-                "audience"=>"api.atlassian.com",
-                "client_id"=>"some client id",
-                "client_secret"=>"some client secret",
-                "grant_type"=>"client_credentials"
-              },
-              headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/x-www-form-urlencoded', 'Host'=>'auth.atlassian.com', 'User-Agent'=>'Ruby'}
+              body: "{\"grant_type\":\"client_credentials\",\"client_id\":\"some client id\",\"client_secret\":\"some client secret\",\"audience\":\"api.atlassian.com\"}",
+              headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Host'=>'auth.atlassian.com', 'User-Agent'=>'Ruby'}
             ).to_return(
               status: 200,
               body: '{"access_token":"some access token","scope":"participate:conversation manage:conversation","expires_in":3600,"token_type":"Bearer"}',
@@ -48,13 +43,8 @@ module Stride
         before do
           stub_request(:post, "https://auth.atlassian.com/oauth/token").
             with(
-              body: {
-                "audience"=>"api.atlassian.com",
-                "client_id"=>"some client id",
-                "client_secret"=>"some client secret",
-                "grant_type"=>"client_credentials"
-              },
-              headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/x-www-form-urlencoded', 'Host'=>'auth.atlassian.com', 'User-Agent'=>'Ruby'}
+              body: "{\"grant_type\":\"client_credentials\",\"client_id\":\"some client id\",\"client_secret\":\"some client secret\",\"audience\":\"api.atlassian.com\"}",
+              headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Host'=>'auth.atlassian.com', 'User-Agent'=>'Ruby'}
             ).to_return(
               status: 403,
               body: '{"error":"access denied or something"}',
