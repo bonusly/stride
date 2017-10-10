@@ -43,7 +43,7 @@ This returns a `Token` instance, which will have an `access_token` attribute.
 
 ### Sending a message
 
-If there's a specific cloud and conversation you want to send to, you can send an arbitrary message using `Stride::Client#send_message`.
+If there's a specific cloud and conversation you want to send to, you can send an arbitrary message using `Stride::Client#send_message`. Refer to the [Stride API documentation](https://developer.atlassian.com/cloud/stride/blocks/message-format/) for details on the message format.
 
 ```ruby
 cloud_id = '911f7ab7-0581-4082-bed3-bad889ec4c91'
@@ -66,6 +66,13 @@ message_body = {
 }
 
 Stride::Client.new.send_message(cloud_id, conversation_id, message_body)
+# => {"id"=>"5d6e39d3-ab1d-10e7-be03-02420aff0003"}
+```
+
+To send a plain text message as above, there's a convience method, `Stride::Client#send_text_message`:
+
+```ruby
+Stride::Client.new.send_message(cloud_id, conversation_id, 'I am the egg man, they are the egg men')
 # => {"id"=>"5d6e39d3-ab1d-10e7-be03-02420aff0003"}
 ```
 

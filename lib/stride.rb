@@ -3,6 +3,7 @@ require "stride/configuration"
 require "stride/base_request"
 require "stride/token"
 require "stride/message"
+require "stride/text_message"
 require "stride/client"
 
 module Stride
