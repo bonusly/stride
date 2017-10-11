@@ -15,9 +15,9 @@ module Stride
 
     attr_accessor :access_token, :cloud_id, :conversation_id, :message_body
 
-    class Request < BaseRequest
+    class Request < AuthorizedRequest
       def initialize(access_token, cloud_id, conversation_id, message_body)
-        self.access_token           = access_token
+        self.access_token    = access_token
         self.cloud_id        = cloud_id
         self.conversation_id = conversation_id
         self.message_body    = message_body
@@ -25,7 +25,7 @@ module Stride
 
       private
 
-      attr_accessor :access_token, :cloud_id, :conversation_id, :message_body
+      attr_accessor :cloud_id, :conversation_id, :message_body
 
       def uri
         URI(
@@ -35,13 +35,6 @@ module Stride
 
       def params
         message_body
-      end
-
-      def headers
-        {
-          authorization: "Bearer #{access_token}",
-          'content-type': 'application/json'
-        }
       end
     end
   end

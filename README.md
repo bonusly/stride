@@ -76,6 +76,15 @@ Stride::Client.new.send_message(cloud_id, conversation_id, 'I am the egg man, th
 # => {"id"=>"5d6e39d3-ab1d-10e7-be03-02420aff0003"}
 ```
 
+To get details about a user when you have the id:
+
+```ruby
+Stride::Client.new.get_user(cloud_id, user_id)
+```
+
+This returns a `User` instance with the following attributes:
+`:id, :user_name, :active, :display_name, :emails, :meta, :photos`
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

@@ -21,12 +21,16 @@ module Stride
     end
 
     def request
-      Net::HTTP::Post.new(uri).tap do |req|
+      request_class.new(uri).tap do |req|
         req.body = params.to_json if params.any?
         headers.each do |key, value|
           req[key] = value
         end
       end
+    end
+
+    def request_class
+      Net::HTTP::Post
     end
 
     def uri
