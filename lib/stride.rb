@@ -5,6 +5,7 @@ require "stride/token"
 require "stride/message"
 require "stride/text_message"
 require "stride/client"
+require "stride/installation"
 
 module Stride
   class << self
