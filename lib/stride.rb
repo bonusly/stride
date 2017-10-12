@@ -8,6 +8,7 @@ require "stride/text_message"
 require "stride/client"
 require "stride/installation"
 require "stride/user"
+require "stride/document"
 
 module Stride
   class << self
