@@ -12,9 +12,8 @@ module Stride
       TextMessage.new(access_token, cloud_id, conversation_id, message_text).send!
     end
 
-    # Converts messages with HTML links to Stride-friendly messages
-    def send_message_from_html(cloud_id, conversation_id, html)
-      document = Document.new(html)
+    def send_markdown_message(cloud_id, conversation_id, markdown)
+      document = MarkdownDocument.new(markdown)
       send_message(cloud_id, conversation_id, document.as_json)
     end
 

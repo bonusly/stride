@@ -76,11 +76,13 @@ Stride::Client.new.send_message(cloud_id, conversation_id, 'I am the egg man, th
 # => {"id"=>"5d6e39d3-ab1d-10e7-be03-02420aff0003"}
 ```
 
-To send a message from HTML (currently only supports `a` tags):
+To send a message from Markdown:
 
 ```ruby
-Stride::Client.new.send_message_from_html(cloud_id, conversation_id, 'Oh hi <a href="https://bonus.ly">click here</a>')
+Stride::Client.new.send_markdown_message(cloud_id, conversation_id, 'Oh hi [click here](https://bonus.ly)')
 ```
+
+The Markdown renderer supports images, links, and emojis.
 
 To get details about a user when you have the id:
 
