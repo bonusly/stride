@@ -10,6 +10,7 @@ require "stride/installation"
 require "stride/user"
 require "stride/markdown_document"
 require "stride/conversation"
+require "stride/conversation_roster"
 
 module Stride
   class << self
