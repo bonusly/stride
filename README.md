@@ -41,14 +41,22 @@ Stride::Token.fetch!
 
 This returns a `Token` instance, which will have an `access_token` attribute.
 
-### Sending a message
+### Creating a client
 
-If there's a specific cloud and conversation you want to send to, you can send an arbitrary message using `Stride::Client#send_message`. Refer to the [Stride API documentation](https://developer.atlassian.com/cloud/stride/blocks/message-format/) for details on the message format.
+Send in the cloud_id and conversation_id:
 
 ```ruby
 cloud_id = '911f7ab7-0581-4082-bed3-bad889ec4c91'
 conversation_id = '76987a29-b7d9-43c5-b071-7aab71d88a6b'
 
+client = Stride::Client.new(cloud_id, conversation_id)
+```
+
+### Sending a message
+
+If there's a specific cloud and conversation you want to send to, you can send an arbitrary message using `Stride::Client#send_message`. Refer to the [Stride API documentation](https://developer.atlassian.com/cloud/stride/blocks/message-format/) for details on the message format.
+
+```ruby
 message_body = {
   version: 1,
   type: 'doc',
@@ -65,29 +73,31 @@ message_body = {
   ]
 }
 
-Stride::Client.new.send_message(cloud_id, conversation_id, message_body)
+client.send_message(message_body)
 # => {"id"=>"5d6e39d3-ab1d-10e7-be03-02420aff0003"}
 ```
 
 To send a plain text message as above, there's a convience method, `Stride::Client#send_text_message`:
 
 ```ruby
-Stride::Client.new.send_message(cloud_id, conversation_id, 'I am the egg man, they are the egg men')
+client.send_message(cloud_id, conversation_id, 'I am the egg man, they are the egg men')
 # => {"id"=>"5d6e39d3-ab1d-10e7-be03-02420aff0003"}
 ```
 
 To send a message from Markdown:
 
 ```ruby
-Stride::Client.new.send_markdown_message(cloud_id, conversation_id, 'Oh hi [click here](https://bonus.ly)')
+client.send_markdown_message(cloud_id, conversation_id, 'Oh hi [click here](https://bonus.ly)')
 ```
 
 The Markdown renderer supports images, links, and emojis.
 
+### User Details
+
 To get details about a user when you have the id:
 
 ```ruby
-Stride::Client.new.get_user(cloud_id, user_id)
+client.user(user_id)
 ```
 
 This returns a `User` instance with the following attributes:
@@ -96,11 +106,19 @@ This returns a `User` instance with the following attributes:
 To get details about a conversation when you have the id:
 
 ```ruby
-Stride::Client.new.get_conversation(cloud_id, conversation_id)
+client.conversation
 ```
 
 This returns a `Conversation` instance with the following attributes:
 `:cloud_id, :id, :name, :topic, :type, :created, :modified, :avatar_url, :privacy, :is_archived`
+
+To get the members of the conversation:
+
+```ruby
+client.conversation_roster.users
+```
+
+This will return an array of `User` instances for everyone in the conversation.
 
 ## Development
 

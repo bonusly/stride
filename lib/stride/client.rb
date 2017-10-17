@@ -1,31 +1,42 @@
 module Stride
   class Client
 
+    def initialize(cloud_id, conversation_id)
+      self.cloud_id        = cloud_id
+      self.conversation_id = conversation_id
+    end
+
     # `message_body` is a formatted message in JSON
     # See: https://developer.atlassian.com/cloud/stride/blocks/message-format/
-    def send_message(cloud_id, conversation_id, message_body)
+    def send_message(message_body)
       Message.new(access_token, cloud_id, conversation_id, message_body).send!
     end
 
     # Convenience method for sending a plain text message
-    def send_text_message(cloud_id, conversation_id, message_text)
+    def send_text_message(message_text)
       TextMessage.new(access_token, cloud_id, conversation_id, message_text).send!
     end
 
-    def send_markdown_message(cloud_id, conversation_id, markdown)
+    def send_markdown_message(markdown)
       document = MarkdownDocument.new(markdown)
       send_message(cloud_id, conversation_id, document.as_json)
     end
 
-    def get_user(cloud_id, user_id)
+    def user(user_id)
       User.fetch!(access_token, cloud_id, user_id)
     end
 
-    def get_conversation(cloud_id, conversation_id)
+    def conversation
       Conversation.fetch!(access_token, cloud_id, conversation_id)
     end
 
+    def conversation_roster
+      ConversationRoster.fetch!(access_token, cloud_id, conversation_id)
+    end
+
     private
+
+    attr_accessor :cloud_id, :conversation_id
 
     def access_token
       token.access_token

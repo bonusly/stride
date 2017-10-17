@@ -1,13 +1,19 @@
 module Stride
   class ConversationRoster
-    attr_accessor :ids
+    attr_accessor :access_token, :cloud_id, :ids
 
     def self.fetch!(access_token, cloud_id, conversation_id)
-      new(Request.new(access_token, cloud_id, conversation_id).json)
+      new(access_token, cloud_id, Request.new(access_token, cloud_id, conversation_id).json)
     end
 
-    def initialize(json)
-      self.ids = json['values']
+    def initialize(access_token, cloud_id, json)
+      self.access_token = access_token
+      self.cloud_id     = cloud_id
+      self.ids          = json['values']
+    end
+
+    def users
+      @users ||= ids.map { |id| User.fetch!(access_token, cloud_id, id) }
     end
 
     private
