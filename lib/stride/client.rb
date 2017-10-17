@@ -21,6 +21,10 @@ module Stride
       User.fetch!(access_token, cloud_id, user_id)
     end
 
+    def get_conversation(cloud_id, conversation_id)
+      Conversation.fetch!(access_token, cloud_id, conversation_id)
+    end
+
     private
 
     def access_token

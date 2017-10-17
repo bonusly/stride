@@ -9,6 +9,7 @@ require "stride/client"
 require "stride/installation"
 require "stride/user"
 require "stride/markdown_document"
+require "stride/conversation"
 
 module Stride
   class << self

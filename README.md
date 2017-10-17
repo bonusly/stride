@@ -93,6 +93,15 @@ Stride::Client.new.get_user(cloud_id, user_id)
 This returns a `User` instance with the following attributes:
 `:id, :user_name, :active, :display_name, :emails, :meta, :photos`
 
+To get details about a conversation when you have the id:
+
+```ruby
+Stride::Client.new.get_conversation(cloud_id, conversation_id)
+```
+
+This returns a `Conversation` instance with the following attributes:
+`:cloud_id, :id, :name, :topic, :type, :created, :modified, :avatar_url, :privacy, :is_archived`
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
