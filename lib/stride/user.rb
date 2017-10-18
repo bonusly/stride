@@ -16,6 +16,10 @@ module Stride
       new(UserRequest.new(access_token, cloud_id, user_id).json)
     end
 
+    def primary_email
+      emails.detect { |email| email.primary? }&.value
+    end
+
     private
 
     Email = Struct.new(:value, :primary) do
