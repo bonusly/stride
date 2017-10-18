@@ -18,8 +18,7 @@ module Stride
     end
 
     def send_markdown_message(markdown)
-      document = MarkdownDocument.new(markdown)
-      send_message(cloud_id, conversation_id, document.as_json)
+      send_message(MarkdownDocument.new(markdown).as_json)
     end
 
     def user(user_id)
