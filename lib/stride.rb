@@ -1,16 +1,17 @@
-require "stride/version"
-require "stride/configuration"
-require "stride/base_request"
-require "stride/authorized_request"
-require "stride/token"
-require "stride/message"
-require "stride/text_message"
-require "stride/client"
-require "stride/installation"
-require "stride/user"
-require "stride/markdown_document"
-require "stride/conversation"
-require "stride/conversation_roster"
+require 'stride/version'
+require 'stride/configuration'
+require 'stride/base_request'
+require 'stride/authorized_request'
+require 'stride/token'
+require 'stride/message'
+require 'stride/text_message'
+require 'stride/client'
+require 'stride/installation'
+require 'stride/user'
+require 'stride/markdown_document'
+require 'stride/conversation'
+require 'stride/conversation_roster'
+require 'stride/bot_mention'
 
 module Stride
   class << self
