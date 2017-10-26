@@ -8,8 +8,8 @@ module Stride
     end
 
     def initialize(json)
-      self.cloud_id    = json['cloudId']
       self.id          = json['id']
+      self.cloud_id    = json['cloudId']
       self.name        = json['name']
       self.topic       = json['topic']
       self.type        = json['type']

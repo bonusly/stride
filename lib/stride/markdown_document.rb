@@ -47,6 +47,21 @@ module Stride
         }.to_json + ','
       end
 
+      def emphasis(text)
+        # unwrap text that got passed through `normal_text`
+        text = JSON.parse(text.sub(/,\Z/, ''))['text']
+
+        {
+          "type": "text",
+          "text": text,
+          "marks": [
+            {
+              "type": "strong"
+            }
+          ]
+        }.to_json + ','
+      end
+
       def image(link, title, alt_text)
         {
           "type": "text",

@@ -29,6 +29,39 @@ module Stride
         end
       end
 
+      context 'with bolded text' do
+        let(:markdown) { 'hi *bob*' }
+
+        it 'converts it into stride-friendly json' do
+          expect(document.as_json).to eq(
+            {
+              "version": 1,
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type" => "text",
+                      "text" => "hi "
+                    },
+                    {
+                      "type" => "text",
+                      "text" => "bob",
+                      "marks" => [
+                        {
+                          "type" => "strong"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          )
+        end
+      end
+
       context 'when links are included' do
         let(:markdown) { 'Hi from [Bonusly team](https://bonus.ly) okay!' }
 
