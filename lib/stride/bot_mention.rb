@@ -24,6 +24,10 @@ module Stride
       Conversation.new(json['conversation'])
     end
 
+    def text_with_mentions_as_user_ids
+      content_blocks.map { |block| block.respond_to?(:at_id) ? block.at_id : block.text }.join.strip
+    end
+
     private
 
     attr_accessor :json
@@ -88,6 +92,10 @@ module Stride
 
       def mention?
         true
+      end
+
+      def at_id
+        "@#{id}"
       end
 
       private

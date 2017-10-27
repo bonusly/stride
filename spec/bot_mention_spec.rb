@@ -81,6 +81,12 @@ module Stride
       end
     end
 
+    describe '#text_with_mentions_as_user_ids' do
+      it 'replaces user names with user ids' do
+        expect(document.text_with_mentions_as_user_ids).to eq '@bonusly-bot-id +5 @raphael-id test #go-get-results'
+      end
+    end
+
     describe '#mentions' do
       let(:mentions) { document.mentions }
 
