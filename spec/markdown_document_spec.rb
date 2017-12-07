@@ -183,10 +183,6 @@ module Stride
                     "type": "paragraph",
                     "content": [
                       {
-                        "type"=>"text",
-                        "text"=>""
-                      },
-                      {
                         "type" => "emoji",
                         "attrs" => {
                           "shortName" => ":smiley:"

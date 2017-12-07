@@ -41,6 +41,8 @@ module Stride
       end
 
       def normal_text(text)
+        return nil if text.to_s.size == 0
+
         {
           "type": "text",
           "text": text
