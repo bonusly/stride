@@ -95,6 +95,37 @@ module Stride
         end
       end
 
+      context 'with a line break' do
+        let(:markdown) { "hi  \r\nbob" }
+
+        it 'converts it into stride-friendly json' do
+          expect(document.as_json).to eq(
+            {
+              "version": 1,
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type" => "text",
+                      "text" => "hi  "
+                    },
+                    {
+                      "type" => "hardBreak"
+                    },
+                    {
+                      "type" => "text",
+                      "text" => "bob"
+                    }
+                  ]
+                }
+              ]
+            }
+          )
+        end
+      end
+
       context 'when links are included' do
         let(:markdown) { 'Hi from [Bonusly team](https://bonus.ly) okay!' }
 

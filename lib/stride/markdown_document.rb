@@ -126,6 +126,12 @@ module Stride
         end
       end
 
+      def linebreak
+        {
+          "type" => "hardBreak"
+        }.to_json + ','
+      end
+
       def postprocess(document)
         # Strip lingering `!`s from image Markdown that are passed into `normal_text`
         # instead of being used to trigger the `image` hook. Not sure what's going on.
