@@ -77,6 +77,22 @@ module Stride
         }.to_json + ','
       end
 
+      def block_code(code, _language)
+        {
+          "type": "text",
+          "text": code,
+          "marks": [
+            {
+              "type": "code"
+            }
+          ]
+        }.to_json + ','
+      end
+
+      def codespan(code)
+        block_code(code, nil)
+      end
+
       def emoji_json(emoji_name)
         {
           "type": "emoji",
