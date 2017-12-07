@@ -32,7 +32,7 @@ module Stride
 
     class Renderer < Redcarpet::Render::Base
       def preprocess(document)
-        # make emojis look like links so we can us that hook in the renderer
+        # make emojis look like links so we can use that hook
         document.gsub(/(\:\w+\:)/, '[\1]()')
       end
 
