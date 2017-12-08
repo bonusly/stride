@@ -17,6 +17,14 @@ module Stride
       TextMessage.new(access_token, cloud_id, conversation_id, message_text).send!
     end
 
+    def send_user_message(user_id, message_body)
+      UserMessage.new(access_token, cloud_id, user_id, message_body).send!
+    end
+
+    def send_user_markdown_message(user_id, markdown)
+      send_user_message(user_id, MarkdownDocument.new(markdown).as_json)
+    end
+
     def send_markdown_message(markdown)
       send_message(MarkdownDocument.new(markdown).as_json)
     end

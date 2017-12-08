@@ -80,17 +80,25 @@ client.send_message(message_body)
 To send a plain text message as above, there's a convience method, `Stride::Client#send_text_message`:
 
 ```ruby
-client.send_message(cloud_id, conversation_id, 'I am the egg man, they are the egg men')
+client.send_message('I am the egg man, they are the egg men')
 # => {"id"=>"5d6e39d3-ab1d-10e7-be03-02420aff0003"}
 ```
 
 To send a message from Markdown:
 
 ```ruby
-client.send_markdown_message(cloud_id, conversation_id, 'Oh hi [click here](https://bonus.ly)')
+client.send_markdown_message('Oh hi [click here](https://bonus.ly)')
 ```
 
 The Markdown renderer supports images, links, and emojis.
+
+To send a user a message:
+
+```ruby
+client.send_user_message(user_id, 'Do you have any eggs?')
+
+client.send_user_markdown_message(user_id, 'Do you have *any* eggs?')
+```
 
 ### User Details
 
