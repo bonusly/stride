@@ -126,6 +126,45 @@ module Stride
         end
       end
 
+      context 'with non-standard line breaks followed by an image' do
+        let(:markdown) { "hi\n\n![](image.png)" }
+
+        it 'converts it into stride-friendly json but is a bit buggy and formats line breaks as a space' do
+          expect(document.as_json).to eq(
+            {
+              "version": 1,
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type" => "text",
+                      "text" => "hi"
+                    },
+                    {
+                      "type" => "text",
+                      "text" => " "
+                    },
+                    {
+                      "type" => "text",
+                      "text" => "image",
+                      "marks" =>
+                      [
+                        {
+                          "type" => "link",
+                          "attrs" => { "href" => "image.png" }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          )
+        end
+      end
+
       context 'when links are included' do
         let(:markdown) { 'Hi from [Bonusly team](https://bonus.ly) okay!' }
 

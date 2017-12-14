@@ -140,6 +140,11 @@ module Stride
         # Strip leading/trailing commas
         document = document.sub(/\A,/, '').sub(/,\Z/, '')
 
+        # Replace empty strings with a space. This is a hack due to multiple line breaks
+        # in a row followed by an image not getting formatted correctly...
+        # FIXME: Should really get a couple of hardbreaks instead of a space.
+        document = document.gsub('{"type":"text","text":""}', '{"type":"text", "text":" "}')
+
         # Return document as JSON
         JSON.parse("[#{document}]")
       end
