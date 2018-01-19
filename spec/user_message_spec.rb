@@ -34,6 +34,14 @@ module Stride
         )
       end
 
+      before do
+        # stub installation with the user's direct conversation
+
+        stub_request(:get, "https://api.atlassian.com/site/1/conversation/user/2").
+          with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer token', 'Content-Type'=>'application/json', 'Host'=>'api.atlassian.com', 'User-Agent'=>'Ruby'}).
+          to_return(status: 200, body: "{}", headers: {})
+      end
+
       context 'when successful' do
         before do
           stub_request(:post, 'https://api.atlassian.com/site/1/conversation/user/2/message').
