@@ -90,7 +90,7 @@ To send a message from Markdown:
 client.send_markdown_message('Oh hi [click here](https://bonus.ly)')
 ```
 
-The Markdown renderer supports images, links, and emojis.
+We use Atlassian's service for rendering Markdown to Atlassian Document Format (ADF).
 
 To send a user a message:
 

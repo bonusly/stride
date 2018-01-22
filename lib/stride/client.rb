@@ -56,7 +56,7 @@ module Stride
     end
 
     def have_token?
-      @token.present? && @token.unexpired?
+      !@token.nil? && @token.unexpired?
     end
   end
 end
