@@ -1,5 +1,3 @@
-require 'redcarpet'
-
 module Stride
   class MarkdownDocument
     def initialize(request)
