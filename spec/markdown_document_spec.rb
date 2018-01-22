@@ -2,339 +2,60 @@ require 'spec_helper'
 
 module Stride
   RSpec.describe MarkdownDocument do
-    let(:document) { described_class.new(markdown) }
+    before do
+      Stride.configure do |config|
+        config.client_id = 'some client id'
+        config.client_secret = 'some client secret'
+      end
+    end
+
+    let(:document) {
+      access_token = 'access token'
+      described_class.fetch!(access_token, markdown)
+    }
 
     describe '#as_json' do
-      context 'plain text' do
-        let(:markdown) { 'hi' }
+      let(:markdown) { 'hi' }
 
-        it 'converts into stride-friendly json' do
-          expect(document.as_json).to eq(
-            {
-              "version": 1,
-              "type": "doc",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    {
-                      "type" => "text",
-                      "text" => "hi"
-                    }
-                  ]
-                }
-              ]
-            }
-          )
-        end
-      end
-
-      context 'with bolded text' do
-        let(:markdown) { 'hi *bob*' }
-
-        it 'converts it into stride-friendly json' do
-          expect(document.as_json).to eq(
-            {
-              "version": 1,
-              "type": "doc",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    {
-                      "type" => "text",
-                      "text" => "hi "
-                    },
-                    {
-                      "type" => "text",
-                      "text" => "bob",
-                      "marks" => [
-                        {
-                          "type" => "strong"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          )
-        end
-      end
-
-      context 'with code' do
-        let(:markdown) { 'hi `bob`' }
-
-        it 'converts it into stride-friendly json' do
-          expect(document.as_json).to eq(
-            {
-              "version": 1,
-              "type": "doc",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    {
-                      "type" => "text",
-                      "text" => "hi "
-                    },
-                    {
-                      "type" => "text",
-                      "text" => "bob",
-                      "marks" => [
-                        {
-                          "type" => "code"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          )
-        end
-      end
-
-      context 'with a line break' do
-        let(:markdown) { "hi  \r\nbob" }
-
-        it 'converts it into stride-friendly json' do
-          expect(document.as_json).to eq(
-            {
-              "version": 1,
-              "type": "doc",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    {
-                      "type" => "text",
-                      "text" => "hi  "
-                    },
-                    {
-                      "type" => "hardBreak"
-                    },
-                    {
-                      "type" => "text",
-                      "text" => "bob"
-                    }
-                  ]
-                }
-              ]
-            }
-          )
-        end
-      end
-
-      context 'with non-standard line breaks followed by an image' do
-        let(:markdown) { "hi\n\n![](image.png)" }
-
-        it 'converts it into stride-friendly json but is a bit buggy and formats line breaks as a space' do
-          expect(document.as_json).to eq(
-            {
-              "version": 1,
-              "type": "doc",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    {
-                      "type" => "text",
-                      "text" => "hi"
-                    },
-                    {
-                      "type" => "text",
-                      "text" => " "
-                    },
-                    {
-                      "type" => "text",
-                      "text" => "image",
-                      "marks" =>
-                      [
-                        {
-                          "type" => "link",
-                          "attrs" => { "href" => "image.png" }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          )
-        end
-      end
-
-      context 'when links are included' do
-        let(:markdown) { 'Hi from [Bonusly team](https://bonus.ly) okay!' }
-
-        it 'converts into stride-friendly json' do
-          expect(document.as_json).to eq(
-            {
-              "version": 1,
-              "type": "doc",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    {
-                      "type" => "text",
-                      "text" => "Hi from "
-                    },
-                    {
-                      "type" => "text",
-                      "text" => "Bonusly team",
-                      "marks" => [
-                        {
-                          "type" => "link",
-                          "attrs" => {
-                            "href" => "https://bonus.ly"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "type" => "text",
-                      "text" => " okay!"
-                    }
-                  ]
-                }
-              ]
-            }
-          )
-        end
-      end
-
-      context 'when emojis are included' do
-        context 'in the middle' do
-          let(:markdown) { 'Hi :smiley: team' }
-
-          it 'converts into stride-friendly json' do
-            expect(document.as_json).to eq(
+      before do
+        stub_request(:post, "https://api.atlassian.com/pf-editor-service/convert?from=markdown&to=adf").
+          with(body: "{\"input\":\"hi\"}",
+               headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer access token', 'Content-Type'=>'application/json', 'Host'=>'api.atlassian.com', 'User-Agent'=>'Ruby'}).
+          to_return(status: 200, body: {
+            "version" => 1,
+            "type" => "doc",
+            "content" => [
               {
-                "version": 1,
-                "type": "doc",
-                "content": [
+                "type" => "paragraph",
+                "content" => [
                   {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type" => "text",
-                        "text" => "Hi "
-                      },
-                      {
-                        "type" => "emoji",
-                        "attrs" => {
-                          "shortName" => ":smiley:"
-                        }
-                      },
-                      {
-                        "type" => "text",
-                        "text" => " team"
-                      }
-                    ]
+                    "type" => "text",
+                    "text" => "hi"
                   }
                 ]
               }
-            )
-          end
-        end
-
-        context 'in the beginning' do
-          let(:markdown) { ':smiley: Hi' }
-
-          it 'converts into stride-friendly json' do
-            expect(document.as_json).to eq(
-              {
-                "version": 1,
-                "type": "doc",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type" => "emoji",
-                        "attrs" => {
-                          "shortName" => ":smiley:"
-                        }
-                      },
-                      {
-                        "type" => "text",
-                        "text" => " Hi"
-                      }
-                    ]
-                  }
-                ]
-              }
-            )
-          end
-        end
-
-        context 'at the end' do
-          let(:markdown) { 'Hi :smiley:' }
-
-          it 'converts into stride-friendly json' do
-            expect(document.as_json).to eq(
-              {
-                "version": 1,
-                "type": "doc",
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type" => "text",
-                        "text" => "Hi "
-                      },
-                      {
-                        "type" => "emoji",
-                        "attrs" => {
-                          "shortName" => ":smiley:"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            )
-          end
-        end
+            ]
+          }.to_json, headers: {})
       end
 
-      context 'when markdown images are included' do
-        let(:markdown) { 'oh hi ![](https://media2.giphy.com/media/dtBi0s3hndz7q/giphy-downsized.gif)' }
-
-        it 'turns them into a link' do
-          expect(document.as_json).to eq(
-            {
-              "version": 1,
-              "type": "doc",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    {
-                      "type" => "text",
-                      "text" => "oh hi "
-                    },
-                    {
-                      "type" => "text",
-                      "text" => "image",
-                      "marks" => [
-                        {
-                          "type" => "link",
-                          "attrs" => {
-                            "href" => "https://media2.giphy.com/media/dtBi0s3hndz7q/giphy-downsized.gif"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          )
-        end
+      it 'converts into stride-friendly json' do
+        expect(document.as_json).to eq(
+          {
+            "version" => 1,
+            "type" => "doc",
+            "content" => [
+              {
+                "type" => "paragraph",
+                "content" => [
+                  {
+                    "type" => "text",
+                    "text" => "hi"
+                  }
+                ]
+              }
+            ]
+          }
+        )
       end
     end
   end

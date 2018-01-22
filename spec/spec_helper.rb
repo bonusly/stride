@@ -1,6 +1,9 @@
-require "bundler/setup"
-require "stride"
-require "webmock/rspec"
+require 'bundler/setup'
+require 'stride'
+require 'net/http'
+require 'active_support'
+require 'active_support/json'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
