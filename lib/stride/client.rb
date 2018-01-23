@@ -22,11 +22,11 @@ module Stride
     end
 
     def send_user_markdown_message(user_id, markdown)
-      send_user_message(user_id, MarkdownDocument.new(markdown).as_json)
+      send_user_message(user_id, MarkdownDocument.fetch!(access_token, markdown).as_json)
     end
 
     def send_markdown_message(markdown)
-      send_message(MarkdownDocument.new(markdown).as_json)
+      send_message(MarkdownDocument.fetch!(access_token, markdown).as_json)
     end
 
     def user(user_id)
