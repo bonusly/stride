@@ -33,7 +33,12 @@ module Stride
     attr_accessor :json
 
     def content_blocks
-      ContentBlock.wrap(json['message']['body']['content'].first)
+      ContentBlock.wrap(content_json)
+    end
+
+    def content_json
+      content = json['message']['body']['content']
+      content.detect { |json| json['type'] == 'paragraph' } || content.first
     end
 
     class ContentBlock

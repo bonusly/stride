@@ -12,6 +12,22 @@ module Stride
             "type"    => "doc",
             "content" => [
               {
+                "attrs"=> {},
+                "content"=>[
+                  {
+                    "attrs"=>{
+                      "collection"=>"conversation-id",
+                      "id"=>"90054813-d63a-496c-8ab9-ec8ccba574ef",
+                      "occurrenceKey"=>"urn:chat:message:6ed6b2a3-167f-11e8-af18-02420aff0003",
+                      "type"=>"file"
+                    },
+                    "content"=>nil,
+                    "type"=>"media"
+                  }
+                ],
+                "type"=>"mediaGroup"
+              },
+              {
                 "type"    => "paragraph",
                 "content" => [
                   {
