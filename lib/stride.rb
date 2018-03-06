@@ -13,6 +13,7 @@ require 'stride/markdown_document'
 require 'stride/conversation'
 require 'stride/conversation_roster'
 require 'stride/bot_mention'
+require 'stride/me'
 
 module Stride
   class << self

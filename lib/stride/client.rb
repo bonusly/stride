@@ -41,6 +41,10 @@ module Stride
       ConversationRoster.fetch!(access_token, cloud_id, conversation_id)
     end
 
+    def me
+      Me.fetch!(access_token)
+    end
+
     private
 
     attr_accessor :cloud_id, :conversation_id
