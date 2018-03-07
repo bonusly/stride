@@ -9,7 +9,7 @@ module Stride
     end
 
     def as_json
-      AtlassianDocumentFormatExpander.new(request.json).json
+      AtlassianDocumentFormatExpander.new(request.json).as_json
     end
 
     private
