@@ -128,6 +128,17 @@ client.conversation_roster.users
 
 This will return an array of `User` instances for everyone in the conversation.
 
+### Bot Details
+
+To get information about your bot user, just call
+
+```ruby
+client.me
+```
+
+This will return a `Me` instance with the following attributes:
+`:account_id, :name, :email, :picture`
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
