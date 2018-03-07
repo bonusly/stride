@@ -25,7 +25,7 @@ module Stride
         end
 
         it 'just returns it' do
-          expect(expander.json).to eq initial_json
+          expect(expander.as_json).to eq initial_json
         end
       end
 
@@ -50,7 +50,7 @@ module Stride
           end
 
           it 'splits it out into a mention' do
-            expect(expander.json).to eq ({
+            expect(expander.as_json).to eq ({
               "version" => 1,
               "type" => "doc",
               "content" => [
@@ -100,7 +100,7 @@ module Stride
           end
 
           it 'splits it out into a mention' do
-            expect(expander.json).to eq ({
+            expect(expander.as_json).to eq ({
               "version" => 1,
               "type" => "doc",
               "content" => [
@@ -146,7 +146,7 @@ module Stride
           end
 
           it 'splits it out into a mention' do
-            expect(expander.json).to eq ({
+            expect(expander.as_json).to eq ({
               "version" => 1,
               "type" => "doc",
               "content" => [
@@ -171,6 +171,53 @@ module Stride
             })
           end
         end
+      end
+    end
+  end
+
+  RSpec.describe AtlassianDocumentFormatExpander::ContentBlock do
+    let(:content_block) { described_class.new(initial_json) }
+
+    context 'when nothing to split' do
+      let(:initial_json) do
+        {
+          "type" => "text",
+          "text" => "hi"
+        }
+      end
+
+      it 'returns the initial json' do
+        expect(content_block.as_json).to eq initial_json
+      end
+    end
+
+    context 'when things to split' do
+      let(:initial_json) do
+        {
+          "type" => "text",
+          "text" => "hi @@Bonusly|ab123@@ sup"
+        }
+      end
+
+      it 'returns the appropriate json' do
+        expect(content_block.as_json).to eq([
+          {
+            "type" => "text",
+            "text" => "hi "
+          },
+          {
+            "type" => "mention",
+            "attrs" => {
+              "id" => "ab123",
+              "text" => "@Bonusly",
+              "accessLevel" => "CONTAINER"
+            }
+          },
+          {
+            "type" => "text",
+            "text" => " sup"
+          }
+        ])
       end
     end
   end
