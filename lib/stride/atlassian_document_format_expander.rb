@@ -41,8 +41,8 @@ module Stride
     end
 
     class ContentBlock
-      MENTION_REGEX = /@@([a-zA-Z]+)\|([a-zA-Z0-9]+)@@/
-      MENTION_REGEX_WITHOUT_GROUPS = /@@[a-zA-Z]+\|[a-zA-Z0-9]+@@/
+      MENTION_REGEX = /@@([a-zA-Z]+)\|([a-zA-Z0-9\-:]+)@@/
+      MENTION_REGEX_WITHOUT_GROUPS = /@@[a-zA-Z]+\|[a-zA-Z0-9\-:]+@@/
 
       def initialize(initial_json)
         self.initial_json = initial_json
