@@ -52,6 +52,17 @@ conversation_id = '76987a29-b7d9-43c5-b071-7aab71d88a6b'
 client = Stride::Client.new(cloud_id, conversation_id)
 ```
 
+This will rely on OAuth to get a token. If you've generated a room token
+[as described here](https://developer.atlassian.com/cloud/stride/security/authentication/),
+then you can pass that in as a third parameter when initializing the client:
+
+```ruby
+Stride::Client.new(cloud_id, conversation_id, access_token)
+```
+
+When you use this approach, the `client_id` and `client_secret` configuration
+are unnecessary.
+
 ### Sending a message
 
 If there's a specific cloud and conversation you want to send to, you can send an arbitrary message using `Stride::Client#send_message`. Refer to the [Stride API documentation](https://developer.atlassian.com/cloud/stride/blocks/message-format/) for details on the message format.

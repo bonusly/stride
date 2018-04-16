@@ -1,9 +1,9 @@
 module Stride
   class Client
-
-    def initialize(cloud_id, conversation_id)
+    def initialize(cloud_id, conversation_id, permanent_token = nil)
       self.cloud_id        = cloud_id
       self.conversation_id = conversation_id
+      self.permanent_token = permanent_token
     end
 
     # `message_body` is a formatted message in JSON
@@ -47,10 +47,10 @@ module Stride
 
     private
 
-    attr_accessor :cloud_id, :conversation_id
+    attr_accessor :cloud_id, :conversation_id, :permanent_token
 
     def access_token
-      token.access_token
+      permanent_token || token.access_token
     end
 
     def token
