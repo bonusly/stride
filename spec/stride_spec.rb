@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 RSpec.describe Stride do
+  describe '.configuration' do
+    it 'returns a non nil object' do
+      described_class.configuration = nil
+
+      expect(described_class.configuration).to_not be nil
+    end
+  end
+
   describe '.configure' do
     before do
       described_class.configure do |config|
